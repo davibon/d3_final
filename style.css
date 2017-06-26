@@ -1,0 +1,42 @@
+        body {
+            background: #eee;
+        }
+        
+        g.arc text {
+            fill: white;
+        }
+        
+        #tooltip {
+            position: absolute;
+            left: 200px;
+            top: 100px;
+            background: #fff;
+            width: 300px;
+            height: auto;
+            padding: 0px 10px;
+            border-radius: 5px;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        #tooltip.hidden {
+            display: none;
+        }
+        
+        .button {
+            /* Green */
+            border: none;
+            width: 100px;
+            height: 100px;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+        }
+        
+        .title {
+            background-color: yellow;
+            border: solid;
+            border-color: black;
+            width: 900px;
+        }
