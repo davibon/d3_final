@@ -4,6 +4,7 @@ var padding = 90;
 var causes = ["eat", "cloth", "hotel", "transport", "edu", "shopping"];
 var causesCHT = ["食", "衣", "住", "行", "文教", "百貨"];
 var causeColor = [];
+var textType = [];
 var cScale = d3.scale.category20();
 for (var i = 0; i < causes.length; i++) {
 	var setColor = cScale(causes[i]);
@@ -110,6 +111,22 @@ function bind(dataSet) {
 	rect.enter().append("rect");
 	rect.exit().remove();
 
+	//標示圖
+	var textArr = dataSet.map(function (d, i) {
+		return d[i].type;
+	});
+
+	console.log("textArr" + textArr);
+
+	var legend = d3.select("svg")
+		.selectAll("g.textArr")
+		.data(textArr);
+	legend.enter().append("g")
+		.attr("transform", function (d, i) {
+			return "translate(0," + i * 20 + ")";
+		})
+		.attr("class", "textArr");
+	legend.exit().remove();
 }
 
 function render(dataSet) {
@@ -210,8 +227,29 @@ function render(dataSet) {
 		.attr("transform", "translate(0," + (h - padding + 10) + ")")
 		.call(xAxis);
 
+	d3.select("svg")
+		.selectAll("g.textArr")
+		.append("rect")
+		.attr("x", w - 19)
+		.attr("width", 19)
+		.attr("height", 19)
+		.attr("fill", function (d, i) {
+			console.log("filld" + i);
+			return cScale(d);
+		});
+	d3.selectAll(".textCauses").remove();
 
-
+	var textCauses = d3.select("svg")
+		.selectAll("g.textArr")
+		.append("text");
+	textCauses.attr("x", w - 55)
+		.attr("y", 9.5)
+		.attr("dy", "0.32em")
+		.attr("class", "textCauses")
+		.text(function (d) {
+			var causesIndex = causes.indexOf(d);
+			return causesCHT[causesIndex];
+		});
 }
 
 function listItems(dataSet) {
@@ -283,4 +321,15 @@ function update(typeName) {
 		render(newLayers);
 	});
 
+}
+
+function unique(array) {
+	var n = [];
+	//去看array中每個元素，如果沒出現過就加到n中      
+	for (var i = 0; i < array.length; i++) {
+		if (n.indexOf(array[i]) < 0) {
+			n.push(array[i]);
+		}
+	}
+	return n;
 }
