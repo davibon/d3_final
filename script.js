@@ -1,6 +1,6 @@
 var w = 900;
 var h = 500;
-var padding = 50;
+var padding = 55;
 var causes = ["eat", "cloth", "hotel", "transport", "edu", "shopping"];
 var causesCHT = ["食", "衣", "住", "行", "文教", "百貨"];
 var causeColor = [];
