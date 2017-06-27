@@ -37,9 +37,14 @@
         
         .title {
         	background-color: yellow;
-        	border: solid;
         	border-color: black;
         	width: 900px;
+        	height: 35px;
+        	margin: 0px;
+        	font-size: 25px;
+        	font-family: Microsoft JhengHei;
+        	font-weight: bold;
+        	text-align: center;
         }
         
         #mlist {

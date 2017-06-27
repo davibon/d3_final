@@ -1,6 +1,6 @@
 var w = 900;
-var h = 600;
-var padding = 90;
+var h = 500;
+var padding = 50;
 var causes = ["eat", "cloth", "hotel", "transport", "edu", "shopping"];
 var causesCHT = ["食", "衣", "住", "行", "文教", "百貨"];
 var causeColor = [];
@@ -54,7 +54,7 @@ function svg() {
 	d3.select("body").append("div").attr({
 			"class": "title"
 		})
-		.html("<h3><img src='img/title.png'>2014-2016年信用卡消費類別分析</h3>");
+		.html("<img src='img/title.png'>2014-2016年信用卡消費類別分析");
 	d3.select("body").append("svg").attr({
 		width: w,
 		height: h,
