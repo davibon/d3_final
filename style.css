@@ -41,3 +41,8 @@
         	border-color: black;
         	width: 900px;
         }
+        
+        #mlist {
+        	width: 200px;
+        	float: right;
+        }

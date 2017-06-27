@@ -27,6 +27,7 @@ d3.csv("credStack_data.csv", row, function (dataSet) {
 	//stack
 	var layers = d3.layout.stack()(causes.map(function (c) {
 		return dataSet.map(function (d) {
+			console.log("d" + d);
 			return {
 				x: d.date,
 				y: +d[c],
@@ -72,21 +73,24 @@ function svg() {
 
 function bind(dataSet) {
 	//4.2 Stacked-to-Grouped bind()
+	var dIndex = "";
 	var arrd3 = d3.select("svg")
 		.selectAll(".layer")
 		.data(dataSet)
 		.attr({
 			"class": "layer",
 			fill: function (d, i) {
-				return causeColor[i];
+				console.log("d[i].type" + d[i].type);
+				dIndex = causes.indexOf(d[i].type);
+				//console.log("dIndex" + dIndex);
+				//return causeColor[dIndex];
 			}
 		});
 	arrd3.enter().append("g")
 		.attr("class", "layer")
 		.style({
 			fill: function (d, i) {
-				//console.log(causes[i]);
-				return cScale(i);
+				return causeColor[i];
 			}
 		});
 	arrd3.exit().remove();
@@ -103,6 +107,7 @@ function bind(dataSet) {
 }
 
 function render(dataSet) {
+	var mlist = [];
 	var xScale = d3.time.scale().domain([
             new Date("2014/1/1"),
             new Date("2016/12/1")
@@ -130,13 +135,17 @@ function render(dataSet) {
 		.enter().append("rect")
 		.transition()
 		.duration(5000)
-		.ease("exp")
+		.ease("circle")
 		.delay(function (d, i) {
-			return i * 10;
+			return i * 20;
 		})
 		.attr({
 			x: function (d, i) {
 				//console.log("x " + d.x);
+				var typeIndex = causes.indexOf(d.type);
+				if (mlist.indexOf(causesCHT[typeIndex]) < 0) {
+					mlist.push(causesCHT[typeIndex]);
+				}
 				return xScale(new Date(d.x));
 			},
 			y: function (d, i) {
@@ -155,6 +164,7 @@ function render(dataSet) {
 			var posX = d3.mouse(this)[0] - 15;
 			var posY = d3.mouse(this)[1] - 25;
 			var tooltip = d3.select("#tooltip")
+				.transition().duration(100).ease("linear")
 				.style({
 					left: (+posX + 20) + "px",
 					top: (+posY + 20) + "px"
@@ -170,7 +180,7 @@ function render(dataSet) {
 				var typeIndex = causes.indexOf(d.type);
 				return "類別:<img src='img/" + d.type + ".png'>" + causesCHT[typeIndex];
 			});
-			tooltip.classed("hidden", false);
+			d3.select("#tooltip").classed("hidden", false);
 		})
 
 		.on("mouseout", function (d) {
@@ -193,6 +203,7 @@ function render(dataSet) {
 		.attr("class", "axis")
 		.attr("transform", "translate(0," + (h - padding + 10) + ")")
 		.call(xAxis);
+
 
 
 }
