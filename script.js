@@ -193,15 +193,15 @@ function render(dataSet) {
 					top: (+posY + 20) + "px"
 				});
 			tooltip.select("#date").text(function () {
-				return "年月:" + d.x;
+				return "年月：" + d.x;
 			});
 			tooltip.select("#amount").text(function () {
 				//console.log(this);
-				return "簽帳金額:" + d.y;
+				return "簽帳金額：" + roundDecimal((d.y / 1000000000), 2) + "億元";
 			});
 			d3.select("#tooltip").select("#type").html(function () {
 				var typeIndex = causes.indexOf(d.type);
-				return "類別:<img src='img/" + d.type + ".png'>" + causesCHT[typeIndex];
+				return "類別：<img src='img/" + d.type + ".png'>" + causesCHT[typeIndex];
 			});
 			d3.select("#tooltip").classed("hidden", false);
 		})
@@ -332,4 +332,8 @@ function unique(array) {
 		}
 	}
 	return n;
+}
+
+function roundDecimal(val, precision) {
+	return Math.round(Math.round(val * Math.pow(10, (precision || 0) + 1)) / 10) / Math.pow(10, (precision || 0));
 }
