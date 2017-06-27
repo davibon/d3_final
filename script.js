@@ -83,13 +83,19 @@ function bind(dataSet) {
 				console.log("d[i].type" + d[i].type);
 				dIndex = causes.indexOf(d[i].type);
 				//console.log("dIndex" + dIndex);
-				//return causeColor[dIndex];
+				return causeColor[dIndex];
+			}
+		})
+		.style({
+			fill: function () {
+				return causeColor[dIndex];
 			}
 		});
 	arrd3.enter().append("g")
 		.attr("class", "layer")
 		.style({
 			fill: function (d, i) {
+				console.log(dataSet.length);
 				return causeColor[i];
 			}
 		});
@@ -261,6 +267,7 @@ function update(typeName) {
 	d3.csv("credStack_data.csv", row, function (dataSet) {
 		var newLayers = d3.layout.stack()(newCauses.map(function (c) {
 			return dataSet.map(function (d) {
+				type: c;
 				return {
 					x: d.date,
 					y: +d[c],
@@ -268,6 +275,7 @@ function update(typeName) {
 				};
 			})
 		}));
+		console.log(newLayers);
 		bind(newLayers);
 		d3.selectAll(".layer")
 			.transition().duration(5000)
